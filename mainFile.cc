@@ -15,7 +15,7 @@
 //global varibales 
 #define MATRIX_WIDTH 3
 #define MATRIX_HEIGHT 5
-#define BOX_WIDTH 16
+#define BOX_WIDTH 20
 #define MATRIX_NAME_STRING "Binary File Contents"
 
 using namespace std;
@@ -81,7 +81,7 @@ if(!binInfile)
 
 
   //these three series of statements will allow us to print to the header file
-  sprintf(buffer,"0x%X", myHeader->magicNumber);
+  sprintf(buffer,"Magic: 0x%X", myHeader->magicNumber);
   setCDKMatrixCell(myMatrix, 1, 1,buffer);
   drawCDKMatrix(myMatrix, true);    /* required  */  
 	

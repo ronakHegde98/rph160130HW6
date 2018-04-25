@@ -1,3 +1,10 @@
+/*
+ * Ronak Hegde
+ * Program 6 Header
+ * rph160130@utdallas.edu
+ * section 501
+ *
+*/
 #ifndef PROGRAM6_H
 #define PROGRAM6_H
 #include <stdint.h>
