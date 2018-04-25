@@ -1,5 +1,5 @@
 /*
- * CDK matrix
+ * CDK matrix that will display the contents of a binary file
  * File:   mainFile.cc
  * Author: Ronak Hegde
  * Email: rph160130@utdallas.edu
@@ -11,12 +11,15 @@
 #include <fstream>
 #include <iomanip>
 
+
+//global varibales 
 #define MATRIX_WIDTH 3
 #define MATRIX_HEIGHT 5
-#define BOX_WIDTH 15
+#define BOX_WIDTH 16
 #define MATRIX_NAME_STRING "Binary File Contents"
 
 using namespace std;
+
 
 int main()
 {
@@ -25,7 +28,8 @@ int main()
   CDKSCREEN	*cdkscreen;
   CDKMATRIX     *myMatrix;           // CDK Screen Matrix
   
-  // C0 and R0 are placeholders
+
+// C0 and R0 are placeholders
   const char 		*rowTitles[] = {"R0", "a", "b", "c", "d", "e"};
   const char 		*columnTitles[] = {"C0", "a", "b", "c", "C4", "C5"};
   int		boxWidths[] = {BOX_WIDTH, BOX_WIDTH, BOX_WIDTH, BOX_WIDTH, BOX_WIDTH,BOX_WIDTH};
@@ -33,13 +37,16 @@ int main()
   
   char buffer[100];
   
- // BinaryFileRecord *myRecord = new BinaryFileRecord();
+ //create a variable for a BinaryFileRecord and BinaryFileHeader that will allow us to store contents
+ //that we read from the binary file 
+ BinaryFileRecord *myRecord = new BinaryFileRecord();
  BinaryFileHeader *myHeader = new BinaryFileHeader();
 
  ifstream binInfile ("cs3377.bin", ios::in | ios::binary);
+
  binInfile.read((char*)myHeader,sizeof(BinaryFileHeader));
 
-
+//error out if the bin file was not found
 if(!binInfile)
 {
  	cout << "There was an error opening the binary file\n";
@@ -72,10 +79,8 @@ if(!binInfile)
   /* Display the Matrix */
   drawCDKMatrix(myMatrix, true);
 
-  /*
-   * Dipslay a message
-   */
 
+  //these three series of statements will allow us to print to the header file
   sprintf(buffer,"0x%X", myHeader->magicNumber);
   setCDKMatrixCell(myMatrix, 1, 1,buffer);
   drawCDKMatrix(myMatrix, true);    /* required  */  
@@ -88,10 +93,26 @@ if(!binInfile)
   setCDKMatrixCell(myMatrix,1,3,buffer);
   drawCDKMatrix(myMatrix, true);
  
+ unsigned long long int  numberOfRecords = myHeader->numRecords;
+ 
+//for loop that will print and loop through the records and 
+ for(int i = 2; i <int(numberOfRecords)+2; i++)
+ {
+ 	binInfile.read((char*)myRecord, sizeof(BinaryFileRecord));
+ 	sprintf(buffer, "strlen: %u",myRecord->strLength);
+	setCDKMatrixCell(myMatrix,i,1, buffer);
+	drawCDKMatrix(myMatrix, true);
 
- /* so we can see results */
-  sleep (10);
+	
+	sprintf(buffer, "%s", myRecord->stringBuffer);
+	setCDKMatrixCell(myMatrix, i, 2, buffer);
+	drawCDKMatrix(myMatrix, true);
+ }
 
+
+ //so we can see results, pause until a key is pressed
+ unsigned char x;
+ cin >> x;
 
   // Cleanup screen
   endCDK();
