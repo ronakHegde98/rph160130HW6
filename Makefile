@@ -5,8 +5,8 @@
 #
 
 CXX = g++
-CXXFLAGS =
-CPPFLAGS = -Wall -g -I/people/cs/s/sxp127930/include
+CXXFLAGS = -Wall -g
+CPPFLAGS = -I/people/cs/s/sxp127930/include
 LDFLAGS = -L/people/cs/s/sxp127930/lib
 LDLIBS = -lcdk -lcurses 
 
@@ -16,7 +16,8 @@ LDLIBS = -lcdk -lcurses
 # This should not contain spaces or special characters
 
 PROJECTNAME = CS3377.HW6
-EXECFILE = cdkexample
+
+EXECFILE = cdkProgram
 
 OBJS = mainFile.o
 
