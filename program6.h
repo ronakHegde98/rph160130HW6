@@ -11,7 +11,7 @@ class BinaryFileHeader
 public:
 	uint32_t magicNumber;
 	uint32_t versionNumber;
-	uint32_t numRecords;
+	uint64_t numRecords;
 
 };
 
@@ -23,7 +23,6 @@ class BinaryFileRecord
 public:
 	uint8_t strLength;
 	char stringBuffer[maxRecordStringLength];
-	double myVal;
 };
 
 

@@ -21,12 +21,10 @@ EXECFILE = cdkProgram
 
 OBJS = mainFile.o
 
-
 all: $(EXECFILE)
 
 clean:
 	rm -f $(OBJS) $(EXECFILE) *.P *~ \#*
-
 
 $(EXECFILE): $(OBJS)
 	$(CXX) -o $@ $(OBJS) $(LDFLAGS) $(LDLIBS)

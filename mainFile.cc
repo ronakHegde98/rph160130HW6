@@ -18,7 +18,6 @@
 
 using namespace std;
 
-
 int main()
 {
 
@@ -32,11 +31,12 @@ int main()
   int		boxWidths[] = {BOX_WIDTH, BOX_WIDTH, BOX_WIDTH, BOX_WIDTH, BOX_WIDTH,BOX_WIDTH};
   int		boxTypes[] = {vMIXED, vMIXED, vMIXED, vMIXED, vMIXED, vMIXED}; 
   
+  char buffer[100];
   
  // BinaryFileRecord *myRecord = new BinaryFileRecord();
  BinaryFileHeader *myHeader = new BinaryFileHeader();
 
- ifstream binInfile ("cs3377.bitch", ios::in | ios::binary);
+ ifstream binInfile ("cs3377.bin", ios::in | ios::binary);
  binInfile.read((char*)myHeader,sizeof(BinaryFileHeader));
 
 
@@ -45,13 +45,7 @@ if(!binInfile)
  	cout << "There was an error opening the binary file\n";
 	exit(0);
 }
-else
-
 	
-
-
- binInfile.close();
-
   /*
    * Initialize the Cdk screen.
    *
@@ -67,8 +61,7 @@ else
    * Create the matrix.  Need to manually cast (const char**) to (char **)
   */
   myMatrix = newCDKMatrix(cdkscreen, CENTER, CENTER, MATRIX_HEIGHT, MATRIX_WIDTH, MATRIX_HEIGHT, MATRIX_WIDTH,
-			  MATRIX_NAME_STRING, (char **) rowTitles, (char **) columnTitles, boxWidths,
-				     boxTypes, 1, 1, ' ', ROW, true, true, false);
+			  MATRIX_NAME_STRING, (char **) rowTitles, (char **) columnTitles, boxWidths,boxTypes, 1, 1, ' ', ROW, true, true, false);
 
   if (myMatrix ==NULL)
     {
@@ -82,12 +75,20 @@ else
   /*
    * Dipslay a message
    */
-  setCDKMatrixCell(myMatrix, 2, 2, "Test Message");
-  drawCDKMatrix(myMatrix, true);    /* required  */ 
-  setCDKMatrixCell(myMatrix, 1, 1,"Magic was: " + myHeader->magicNumber);
+
+  sprintf(buffer,"0x%X", myHeader->magicNumber);
+  setCDKMatrixCell(myMatrix, 1, 1,buffer);
+  drawCDKMatrix(myMatrix, true);    /* required  */  
+	
+  sprintf(buffer, "Version: %d", myHeader->versionNumber);
+  setCDKMatrixCell(myMatrix, 1,2, buffer);
   drawCDKMatrix(myMatrix, true);
 
-  /* so we can see results */
+  sprintf(buffer, "NumRecords: %lu", myHeader->numRecords);
+  setCDKMatrixCell(myMatrix,1,3,buffer);
+  drawCDKMatrix(myMatrix, true);
+ 
+ /* so we can see results */
   sleep (10);
 
 
