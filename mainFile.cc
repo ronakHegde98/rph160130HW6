@@ -80,7 +80,7 @@ if(!binInfile)
   setCDKMatrixCell(myMatrix, 1, 1,buffer);
   drawCDKMatrix(myMatrix, true);    /* required  */  
 	
-  sprintf(buffer, "Version: %d", myHeader->versionNumber);
+  sprintf(buffer, "Version: %u", myHeader->versionNumber);
   setCDKMatrixCell(myMatrix, 1,2, buffer);
   drawCDKMatrix(myMatrix, true);
 
@@ -88,6 +88,7 @@ if(!binInfile)
   setCDKMatrixCell(myMatrix,1,3,buffer);
   drawCDKMatrix(myMatrix, true);
  
+
  /* so we can see results */
   sleep (10);
 
